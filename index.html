@@ -149,12 +149,43 @@ CTA: ${callToAction}`;
                     setApiError('API Google Limit. Menggunakan AI Cadangan Offline agar presentasi tetap jalan...');
                     
                     // ========================================================
-                    // FITUR PENYELAMAT DEMO DOSEN (SIMULASI AI OFFLINE)
+                    // FITUR PENYELAMAT DEMO DOSEN (SIMULASI AI OFFLINE DINAMIS)
                     // ========================================================
+                    const nameModifiers = ["Promo Viral", "Diskon Gila", "Wajib Punya", "Best Seller", "Racun TikTok"];
+                    const descPrefixes = [
+                        "Jujur ini bagus banget woy!",
+                        "Sumpah ya, ini tuh racun banget!",
+                        "Kalian pasti nyesel kalau skip yang satu ini.",
+                        "Akhirnya nemu juga barang yang lagi viral ini.",
+                        "Plis kalian wajib banget tau barang ini!"
+                    ];
+                    const descSuffixes = [
+                        "Kualitasnya beneran di luar nurul, kalian wajib punya sekarang juga! 😍",
+                        "Harganya juga affordable banget buat kualitas se-premium ini. Auto check out sih! 💸",
+                        "Jangan sampai nyesel kehabisan ya, mending amankan sekarang! ✨",
+                        "Asli ini kepake banget, bikin hidup jadi lebih gampang. Love it! ❤️",
+                        "Cakep pol pokoknya, buruan dibungkus sebelum nyesel! 🔥"
+                    ];
+                    const ctaTemplates = [
+                        "🔥 Buruan klik keranjang kuning di bawah sebelum kehabisan stok promonya! 🔥",
+                        "👇 Checkout sekarang di keranjang kuning mumpung lagi flash sale! 👇",
+                        "🛒 Langsung gas klik keranjang kuning ya bestie, stok menipis! 🛒",
+                        "✨ Jangan tunggu nanti, klik keranjang kuning buat klaim gratis ongkirnya! ✨",
+                        "🎁 Buruan tap keranjang kuning sekarang, ada diskon spesial buat kamu! 🎁"
+                    ];
+
+                    // Fungsi untuk memilih kata acak
+                    const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
                     setTimeout(() => {
-                        setProductName(`✨ ${productName} (Promo Viral) ✨`);
-                        setDescription(`Jujur ini bagus banget woy! ${description} Kualitasnya beneran di luar nurul, kalian wajib punya sekarang juga buat nemenin keseharian kalian! 😍`);
-                        setCallToAction(`🔥 Buruan klik keranjang kuning di bawah sebelum kehabisan stok promonya! 🔥`);
+                        // Bersihkan nama produk dari editan sebelumnya jika tombol diklik berkali-kali
+                        let cleanName = productName.replace(/✨/g, '').replace(/\(.*?\)/g, '').trim();
+                        if (!cleanName) cleanName = productName;
+
+                        // Rombak secara acak
+                        setProductName(`✨ ${cleanName} (${randomItem(nameModifiers)}) ✨`);
+                        setDescription(`${randomItem(descPrefixes)} ${description} ${randomItem(descSuffixes)}`);
+                        setCallToAction(randomItem(ctaTemplates));
                         setLastGenerated({ text: '', voice: '', style: '' });
                         setIsEnhancing(false);
                     }, 1500); // Jeda 1.5 detik agar seolah-olah AI sedang berpikir
